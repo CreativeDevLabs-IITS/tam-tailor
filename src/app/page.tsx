@@ -1,69 +1,106 @@
+import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
+import { CallBand } from "@/components/ui";
+import { fabrics, intro, orderSteps, services, site, telHref } from "@/content/site";
+import { OpenNow } from "@/components/OpenNow";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <section className="hero">
+        <div className="container hero__grid">
+          <div>
+            <p className="eyebrow" data-intro>Winnipeg, Manitoba</p>
+            <h1 data-intro>
+              Look your best in clothing made <em>only for you.</em>
+            </h1>
+            <p className="hero__lead" data-intro>{intro}</p>
+            <div className="hero__cta" data-intro>
+              <Link className="btn" data-magnet href="/custom-clothing/">See custom clothing</Link>
+              <a className="btn btn--ghost" data-magnet href={telHref(site.phone)}>Call {site.phone}</a>
+            </div>
+            <OpenNow className="hero__open" />
+          </div>
+          <figure className="hero__photo" data-intro>
+            <div className="hero__frame">
+              <Image src="/images/shop.jpg" alt="The tailor at Tam Custom Tailor, standing in the shop beside shelves of fabric" width={303} height={202} priority />
+            </div>
+            <svg className="hero__thread" viewBox="0 0 300 120" aria-hidden="true">
+              <path className="stitch-path" d="M4 110 C 60 10, 120 120, 170 60 S 260 10, 296 40" />
+            </svg>
+            <figcaption>Choose from swatch books of wool, silk, denim and more.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee__track">
+          {[0, 1].map((k) => (
+            <ul key={k}>
+              {fabrics.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </div>
+
+      <section className="section">
+        <div className="container">
+          <div className="section__head" data-reveal>
+            <p className="eyebrow">What we make and mend</p>
+            <h2>High quality services at <em>moderate prices.</em></h2>
+          </div>
+          <ol className="pattern">
+            {services.map((s, i) => (
+              <li key={s.title} data-reveal>
+                <span className="pattern__n">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="pattern__more" data-reveal>
+            We also offer skilled fur restyling and repairs to leather garments.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="section section--sand">
+        <div className="container">
+          <div className="section__head" data-reveal>
+            <p className="eyebrow">How an order works</p>
+            <h2>From swatch book to <em>finished garment.</em></h2>
+          </div>
+          <ol className="steps">
+            {orderSteps.map((s, i) => (
+              <li key={s.title} data-reveal>
+                <span className="steps__n">{i + 1}</span>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </li>
+            ))}
+          </ol>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="adaptive">
+        <div className="container adaptive__in">
+          <div data-reveal>
+            <p className="eyebrow eyebrow--light">New</p>
+            <h2>Tam Custom Tailor is now offering <em>adaptive clothing.</em></h2>
+          </div>
+          <div data-reveal>
+            <p>Comfortable, stylish clothing with snaps, zippers and easy openings, made around the way you dress.</p>
+            <Link className="btn btn--light" data-magnet href="/adaptive-clothing/">Learn about adaptive clothing</Link>
+          </div>
+        </div>
+      </section>
+
+      <CallBand text="Would you like any additional information? Call or email us." />
+    </>
   );
 }
